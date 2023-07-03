@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Note from './components/Note'
+import axios from 'axios';
 
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(false)
+
+  useEffect(() => {
+    console.log("effect");
+    axios
+    .get("https://localhost:3001/notes")
+    .then(response => {
+      console.log("promise fulfilled");
+      setNotes(response.data);
+    })
+  }, []);
 
   const addNote = (event) => {
     event.preventDefault()
@@ -14,7 +25,7 @@ const App = (props) => {
       id: notes.length + 1,
     }
 
-    setNotes(notes.concat(noteObject))
+    setNotes(notes.concat(noteObject));
     setNewNote('')
   }
 
@@ -22,9 +33,7 @@ const App = (props) => {
     setNewNote(event.target.value)
   }
 
-  const notesToShow = showAll
-    ? notes
-    : notes.filter(note => note.important)
+  const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
   return (
     <div>
