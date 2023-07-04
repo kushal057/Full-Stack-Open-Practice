@@ -35,6 +35,16 @@ const App = () => {
     setNewNote(event.target.value)
   }
 
+  const toggleImportanceOf = (id) => {
+    const url = `http:localhost:3001/notes/${id}`;
+    const note = notes.find(n => n.id === id);
+    const changedNote = {...note, important: !this.important}
+
+    axios
+    .put(url, changedNote)
+    .then(response => setNotes(notes.map(n => n.id ==! n.id ? n : response.data)));
+  }
+
   const notesToShow = showAll ? notes : notes.filter(note => note.important)
 
   return (
@@ -48,7 +58,7 @@ const App = () => {
       <ul>
         <ul>
           {notesToShow.map(note => 
-            <Note key={note.id} note={note} />
+            <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
           )}
         </ul>
       </ul>
