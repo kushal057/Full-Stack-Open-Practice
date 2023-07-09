@@ -11,10 +11,7 @@
   "author": "Kushal Tiwari",
   "license": "UNLICENSED",
   "dependencies": {
-<<<<<<< HEAD
     "cors": "^2.8.5",
-=======
->>>>>>> 051014a21915d5bd50e217d8f0f7db59ee91f103
     "express": "^4.18.2"
   },
   "devDependencies": {
