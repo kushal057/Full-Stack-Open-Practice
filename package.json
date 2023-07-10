@@ -6,9 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \\\"Error: no test specified\\\" && exit 1",
-    "build:ui": "rm -rf build && cd ../Full-stack-open-practice && npm run build && xcopy -r build ../FSO-npm-server",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push origin part3-1"
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "author": "Kushal Tiwari",
   "license": "UNLICENSED",
