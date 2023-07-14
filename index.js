@@ -45,16 +45,33 @@ app.get('/api/notes/:id', (request, response) => {
 })
 
 app.delete("/api/notes/:id", (request, response) => {
-    Note.findByIdAndDelete(request.params.id).then(
-        console.log("Successfully deleted!")
-    )
+    Note.findByIdAndRemove(request.params.id).then(note => {
+        response.status(204).end();
+    }).catch(error => {
+        next(error)
+    })
+})
+
+app.put('/api/notes/:id', (request, response, next) => {
+    const body = request.body
+  
+    const note = {
+      content: body.content,
+      important: body.important,
+    }
+  
+    Note.findByIdAndUpdate(request.params.id, note, { new: true })
+      .then(updatedNote => {
+        response.json(updatedNote)
+      })
+      .catch(error => next(error))
 })
 
 app.post('/api/notes', (request, response) => {
     const body = request.body
 
-    if(body.content === undefined) {
-        return response.status(400).json({error: 'content missing'})
+    if (body.content === undefined) {
+        return response.status(400).json({ error: 'content missing' })
     }
 
     const note = new Note({
@@ -65,7 +82,7 @@ app.post('/api/notes', (request, response) => {
     note.save().then(savedNote => {
         response.json(savedNote);
     })
-    
+
 })
 
 const PORT = process.env.PORT
